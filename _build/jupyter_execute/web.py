@@ -15,6 +15,7 @@
 # 
 # ```{figure} image/web/ascii_code.png
 # ---
+# scale: 50%
 # name: ascii_code
 # ---
 # 아스키 코드 표

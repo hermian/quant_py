@@ -11,6 +11,7 @@
 # 
 # ```{figure} image/data_global/tiingo.png
 # ---
+# scale: 70%
 # name: tiingo
 # ---
 # tiingo의 유/무료 서비스 비교
@@ -59,7 +60,7 @@ keyring.set_password('tiingo', 'User Name', 'Your API Token')
 
 # ### 데이터 다운로드
 # 
-# tiingo 패키지를 이용해 데이터를 받아보도록 하겠다. 데이터를 받기 전에 먼저 API 접속환경을 셋팅한다.
+# tiingo 패키지를 이용해 데이터를 받아보도록 하겠다. 데이터를 받기위해 API 접속환경을 셋팅한다.
 
 # In[1]:
 
@@ -75,7 +76,9 @@ config['api_key'] = api_key
 client = TiingoClient(config)
 
 
-# API token을 불러온 후, 접속환경에 해당하는 config에 이를 입력한다. tiingo에서 제공하는 종목은 어떠한 것이 있는지 티커 정보들을 확인해보도록 한다.
+# API token을 불러온 후, 접속환경에 해당하는 config에 이를 입력한다.
+# 
+# 먼저 tiingo에서 제공하는 종목은 어떠한 것이 있는지 티커 정보들을 확인해보도록 하자.
 
 # In[2]:
 
@@ -86,7 +89,7 @@ tickers_df = pd.DataFrame.from_records(tickers)
 tickers_df.head()
 
 
-# ticker(티커), exchange(거래소), assetType(주식 종류), priceCurrency(거래 통화), startDate(시작일), endDate(마감일) 정보가 표시된다. 거래소와 통화 별 종목이 몇개가 있는지 확인해보도록 하자.
+# `list_stock_tickers()` 메서드를 통해 티커 정보를 받아올 수 있다. ticker(티커), exchange(거래소), assetType(주식 종류), priceCurrency(거래 통화), startDate(시작일), endDate(마감일) 정보가 표시된다. 거래소와 통화 별 종목이 몇개가 있는지 확인해보도록 하자.
 
 # In[3]:
 
@@ -119,22 +122,9 @@ historical_prices = client.get_dataframe("AAPL",
 historical_prices.head()
 
 
-# `get_dataframe()` 메서드 내에 티커를 입력하면 close(종가), high(고가), low(저가), open(시가), volumne(거래량) 및 수정주가와 divCash(현금 배당), splitFactor(주식분할 조정계수)까지 제공한다. 
+# `get_dataframe()` 메서드 내에 티커를 입력하면 close(종가), high(고가), low(저가), open(시가), volumne(거래량) 및 수정주가와 divCash(현금 배당), splitFactor(주식분할 조정계수)까지 데이터를 받을 수 있다.
 # 
-# 이번에는 종목이 제공하는 재무제표 항목은 어떠한 것이 있는지 받아보도록 하겠다.
-
-# In[6]:
-
-
-definitions = client.get_fundamentals_definitions('GOOGL')
-definitions_df = pd.DataFrame.from_records(definitions)
-
-definitions_df.head()
-
-
-# `get_fundamentals_definitions()` 메서드 내에 티커를 입력하면 재무제표 항목에 대한 정보가 JSON 형태로 받아지며, `from_records()` 메서드를 통해 데이터프레임 형태로 변경해준다. 결과를 보면 재무제표 항목 및 계산하는 방법과 기타 정보에 대해 매우 자세하게 나와있다.
-# 
-# 일별 가치지표 역시 간단하게 받을 수 있다. (무료 계정의 경우 다우존스 30 지수에 포함되는 종목 정보만 제공한다.)
+# 이번에는 일별 가치지표를 받아보도록 하자. (무료 계정의 경우 다우존스 30 지수에 포함되는 종목 정보만 제공한다.)
 
 # In[7]:
 
@@ -352,7 +342,7 @@ driver.quit()
 
 # ### 전 종목 티커 크롤링
 # 
-# 위 과정을 통해 국가별 전 종목의 티커 및 관련 정보를 수집하는 방법과, 페이지 수를 계산할 수 있었다. 이제 for문을 이용해 일본의 전 종목 티커를 크롤링해보도록 하겠다.
+# 위 과정을 통해 국가별 전 종목의 티커 및 관련 정보를 수집하는 방법과, 페이지 수를 계산할 수 있었다. 이제 for문을 이용해 미국의 전 종목 티커를 크롤링해보도록 하겠다.
 
 # In[25]:
 
@@ -385,7 +375,7 @@ end_num = math.ceil(int(end_num) / 50)
 
 
 # 1. 크롬 드라이브를 불러온다.
-# 2. 국가 코드는 미국에 해당하는 '35'를 입력한다.
+# 2. 국가 코드는 미국에 해당하는 '5'를 입력한다.
 # 3. 먼저 첫페이지에 해당하는 URL을 생성한다.
 # 4. 셀레니움으로 해당 페이지를 연다
 # 5. 'Screener Results'에 해당하는 부분은 종목이 들어있는 테이블이 로딩된 이후 나타난다. 따라서 `WebDriverWait()` 함수를 통해 해당 테이블이 로딩될 때까지 기다리며, 테이블의 XPATH는 '//*[@id="resultsTable"]/tbody' 이다.
@@ -443,7 +433,7 @@ driver.quit()
 # 1. 빈 리스트(all_data_df)를 생성한다.
 # 2. for문을 통해 전체 페이지에서 종목명과 티커 등의 정보를 크롤링한다.
 # 3. f-string을 통해 각 페이지에 해당하는 URL을 생성한 후 페이지를 연다.
-# 4. `WebDriverWait()` 함수를 통해 테이블이 로딩될때 까지 기다린다. 또한 간혹 페이지 오류가 발생할 때가 있으므로, `try except`문을 이용해 오류 발생 시 1초간 기다린 후 `refresh()`를 통해 새로고침을 하여 다시 테이블이 로딩되길 기다린다.
+# 4. `WebDriverWait()` 함수를 통해 테이블이 로딩될때 까지 기다린다. 또한 간혹 페이지 오류가 발생할 때가 있으므로, try except문을 이용해 오류 발생 시 1초간 기다린 후 `refresh()`를 통해 새로고침을 하여 다시 테이블이 로딩되길 기다린다.
 # 5. HTML 정보를 불러온 후, 테이블에 해당하는 부분을 선택한다.
 # 6. 원하는 열만 선택한다.
 # 7. `append()` 메서드를 통해 해당 테이블을 리스트에 추가한다.
@@ -542,13 +532,12 @@ con.close()
 import pandas_datareader as web
 
 price = web.DataReader('AAPL', 'yahoo')
-
 price.head()
 
 
 # `DataReader()` 함수 내에 티커와 출처에 해당하는 'yahoo'를 입력하면 주가 정보를 매우 손쉽게 받을 수 있다.
 # 
-# 반면 미국이 아닌 국가의 경우 단순히 티커만 입력할 경우 데이터를 받을 수 없다. 예를 들어 일본의 도쿄 일렉트론은 일본 내에서 티커가 '8035'이며, 야후 파이낸스에서 이를 검색해보자.
+# 반면 미국이 아닌 국가의 경우 단순히 티커만 입력할 경우 데이터를 받을 수 없다. 예를 들어 일본의 '도쿄 일렉트론'은 일본 내에서 티커가 '8035'이며, 야후 파이낸스에서 이를 검색해보자.
 # 
 # ```{figure} image/data_global/same_ticker.png
 # ---
@@ -557,7 +546,7 @@ price.head()
 # 중복 티커
 # ```
 # 
-# 우리가 원하는 도쿄 일렉트론 뿐만 아니라 홍콩에 상장된 'Janco Holdings Limited'라는 주식 역시 티커가 8035 이다. 이처럼 각기 다른 국가에서 중복된 티커가 사용되는 경우가 종종 발생되므로, 야후 파이낸스 혹은 여러 벤더의 경우 '티커.국가코드'를 통해 이들을 구분한다. 일본의 경우 국가코드는 'T' 이다. 이를 이용해 도쿄 일렉트론의 주가를 받는 법은 다음과 같다.
+# 우리가 원하는 도쿄 일렉트론 뿐만 아니라 홍콩에 상장된 'Janco Holdings Limited'라는 주식 역시 티커가 8035 이다. 이처럼 각기 다른 국가에서 중복된 티커가 사용되는 경우가 종종 발생되므로, 야후 파이낸스 혹은 여러 벤더의 경우 '티커.국가코드' 형태를 통해 이들을 구분한다. 야후 파이낸스에서 일본의 국가코드는 'T' 이다. 이를 이용해 도쿄 일렉트론의 주가를 받는 법은 다음과 같다.
 
 # In[18]:
 
@@ -565,7 +554,6 @@ price.head()
 import pandas_datareader as web
 
 price = web.DataReader('8035.T', 'yahoo')
-
 price.head()
 
 

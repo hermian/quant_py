@@ -904,7 +904,7 @@ having avg(sell_price) > (select avg(sell_price) from goods);
 # 
 # ## 함수, 술어와 case 식
 # 
-# SQL에서도 함수를 이용해 다양한 연산을 할 수 있으며, 다음과 같은 함수가 존재한다. 본 책에서는 수치 계산을 위한 '산술 함수', 문자열 처리를 위한 '문자열 함수', 날짜 처리를 위한 '날짜 함수'에 대해 대해 알아보겠다. 또한 함수의 변형 형태인 술어는 반환 값이 진리값(TRUE/FALSE/UNKNOWN)인 함수라 볼 수 있다. 마지막으로 `case` 식 역시 함수의 일종으로써, SQL 내에서의 `if` 문 이라고도 볼 수 있다.  `case`는 조건에 해당하는 목록을 평가하고 가능한 여러 결과 식 중 하나를 반환한다.
+# SQL에서도 함수를 이용해 다양한 연산을 할 수 있으며, 다음과 같은 함수가 존재한다. 본 책에서는 수치 계산을 위한 '산술 함수', 문자열 처리를 위한 '문자열 함수', 날짜 처리를 위한 '날짜 함수'에 대해 대해 알아보겠다. 또한 함수의 변형 형태인 술어는 반환 값이 진리값(TRUE/FALSE/UNKNOWN)인 함수라 볼 수 있다. 마지막으로 `case` 식 역시 함수의 일종으로써, SQL 내에서의 if문 이라고도 볼 수 있다.  `case`는 조건에 해당하는 목록을 평가하고 가능한 여러 결과 식 중 하나를 반환한다.
 # 
 # ### 산술 함수
 # 
@@ -1189,7 +1189,7 @@ where strcol like 'ddd%';
 # 전방 일치 검색
 # ```
 # 
-# `%`는 "0문자 이상의 임의 문자열" 을 의미하는 특수 기호이며, 위의 예에서 'ddd%'는 'ddd로 시작하는 모든 문자열'을 의미한다. 
+# `%`는 '0문자 이상의 임의 문자열' 을 의미하는 특수 기호이며, 위의 예에서 'ddd%'는 'ddd로 시작하는 모든 문자열'을 의미한다. 
 # 
 # 다음으로 중간 일치 검색은 다음과 같다.
 
@@ -1601,7 +1601,7 @@ left outer join Goods as goods
 # 
 # ## SQL 고급 처리
 # 
-# 이번에는 마지막으로 순위 계산, 누적합 계산, 소계를 구하는 등 고급 집계 처리를 하는 방법인 윈도우 함수 및 GROUPING 연산자에 대해 배워보겠다.
+# 이번에는 마지막으로 순위 계산, 누적합 계산, 소계를 구하는 등 고급 집계 처리를 하는 방법인 윈도우 함수에 대해 배워보겠다.
 # 
 # ### 윈도우 함수
 # 
@@ -1635,18 +1635,20 @@ select goods_name, goods_classify, sell_price,
 	rank() over (partition by goods_classify order by sell_price) as ranking
 from Goods;
 
-```{figure} image/sql/rank.png
----
-name: rank
----
-rank 함수
-```
 
-1. `partition by`는 순위를 정할 대상 범위를 설정하며, 어떤 조건으로 그룹을 나눈다고 생각하면 이해가 쉽다. 상품 분류마다 순위를 구하고자 하므로 goods_classify를 입력한다.
-2. `order by`는 윈도우 함수를 어떤 열에 어떤 순서로 적용할지 정한다. 판매단가를 오름차순으로 순위를 구하고자 하므로 sell_price를 입력하였다. 만일 내림차순으로 순위를 구하고자 할 경우 `desc` 를 입력하면 된다. (기본적으로 asc 즉 오름차순이 적용된다.)
-3. 순위를 구하는 윈도우 전용 함수인 `rank()`를 입력한다.
+# ```{figure} image/sql/rank.png
+# ---
+# name: rank
+# ---
+# rank 함수
+# ```
+# 
+# 1. `partition by`는 순위를 정할 대상 범위를 설정하며, 어떤 조건으로 그룹을 나눈다고 생각하면 이해가 쉽다. 상품 분류마다 순위를 구하고자 하므로 goods_classify를 입력한다.
+# 2. `order by`는 윈도우 함수를 어떤 열에 어떤 순서로 적용할지 정한다. 판매단가를 오름차순으로 순위를 구하고자 하므로 sell_price를 입력하였다. 만일 내림차순으로 순위를 구하고자 할 경우 `desc` 를 입력하면 된다. (기본적으로 asc 즉 오름차순이 적용된다.)
+# 3. 순위를 구하는 윈도우 전용 함수인 `rank()`를 입력한다.
+# 
+# 이 중 `partition by`를 통해 구분된 레코드 집합을 '윈도우'라고 하며, 이는 '범위'를 나타낸다. 만일 `partition by`를 지정하지 않으면 전체 테이블이 윈도우가 되므로, 아래와 같이 sell_price 열 자체를 기준으로 순위가 구해진다.
 
-이 중 `partition by`를 통해 구분된 레코드 집합을 '윈도우'라고 하며, 이는 '범위'를 나타낸다. 만일 `partition by`를 지정하지 않으면 전체 테이블이 윈도우가 되므로, 아래와 같이 sell_price 열 자체를 기준으로 순위가 구해진다.
 # In[ ]:
 
 
@@ -1711,7 +1713,7 @@ from Goods;
 # 
 # `over()`를 빈 칸으로 둘 경우 current_sum 열에는 모든 sell_price의 합계가 나타난다. 이번에는 누적합계를 구해보도록 하자.
 
-# In[1]:
+# In[ ]:
 
 
 select goods_id, goods_name, sell_price,
@@ -1814,110 +1816,11 @@ select goods_id, goods_classify, goods_name, sell_price,
 from goods;
 
 
-# ```{figure} image/sql/window_ma_2.png
+# ```{figure} image/sql/window_ma_3.png
 # ---
 # name: window_ma_3
 # ---
 # 이동평균 계산하기 (3)
 # ```
 # 
-# `rows between n preceding and m following`을 입력하면 앞의 n행과 뒤의 m행 까지를 프레임으로 지정한다. 위의 예에서는 앞의 1개 행과 뒤의 1개 행, 총 3개 행을 이용해 이동평균이 계산된다.
-# 
-# ### GROUPING 연산자
-# 
-# `group by` 구와 집약 함수만으로는 소계나 합계를 동시에 구할 수 없다. 예를 들어 group by로 합계를 구할 경우, 각 그룹의 합을 구할 수는 있지만 전체 합을 나타낼 수는 없다. 이를 한번에 구하는 기능이 grouping 연산자이다.
-# 
-# 먼저 그룹(상품 분류)별 sell_price의 합계를 구하는 법은 다음과 같다.
-
-# In[ ]:
-
-
-select goods_classify, sum(sell_price) as sum_price
-from Goods
-group by goods_classify;
-
-
-# ```{figure} image/sql/group_sum.png
-# ---
-# name: group_sum
-# ---
-# 그룹 별 합계 구하기
-# ```
-# 
-# 만일 전체 합계에 해당하는 소계를 추가하고자 할 경우 `group by [열 이름1]` 뒤에 `with rollup` 구문을 추가해준다. (해당 구문은 DBMS 별로 다르다.)
-
-# In[ ]:
-
-
-select goods_classify, sum(sell_price) as sum_price
-from Goods
-group by goods_classify with rollup;
-
-
-# ```{figure} image/sql/rollup.png
-# ---
-# name: rollup
-# ---
-# 소계 구하기
-# ```
-# 
-# 하단의 NULL에 600+5000+11180에 해당하는 소계 16780 이 계산된다. 이러한 초집합행(super group row)의 집약 키는 기본값으로 null이 사용된다. 하나의 기준이 아닌 여러 기준을 입력할 경우 각각의 소계 및 전체 합계가 구해진다.
-
-# In[ ]:
-
-
-select goods_classify, register_date, sum(sell_price) as sum_price
-from Goods
-group by goods_classify, register_date with rollup;
-
-
-# ```{figure} image/sql/rollup_2.png
-# ---
-# name: rollup_2
-# ---
-# 소계 및 합계 구하기
-# ```
-# 
-# goods_classify와 register_date를 기준으로 그룹을 나누어 합계 및 소계가 구해지며, 가장 하단에는 전체 합계가 구해진다. 이는 엑셀의 피벗 기능과도 비슷하다.
-# 
-# 의류를 살펴보면 register_date가 NULL인 항목이 2개가 존재한다. ① sum_price가 4000인 값은 원래 데이터에서 와이셔츠의 등록일이 NULL이므로 집약 키가 NULL이 사용된 것이며, ② sum_price가 5000인 값은 초집합행(소계)에 해당(1000+4000)하는 값이다. 그러나 한눈에 보기에 둘은 헷갈릴 수 있으므로, 혼동을 방지하기 위해 초집합행(소계)의 NULL을 판별할 수 있는 `grouping` 함수가 존재한다. 해당 함수는 인수로 지정한 열의 값이 초집합행 NULL인 경우 1을, 이외의 값이면 0을 반환한다.
-
-# In[ ]:
-
-
-select grouping(goods_classify), grouping(register_date), sum(sell_price) as sum_price
-from goods
-group by goods_classify, register_date with rollup;
-
-
-# ```{figure} image/sql/group_2.png
-# ---
-# name: group_2
-# ---
-# grouping 함수
-# ```
-# 
-# `grouping` 함수를 통해 초집합행 NULL과 원래 데이터가 NULL인 것을 구분할 수 있다. 이제 앞서 배웠던 case 문을 이용하면 초집합행 키 값과 열 이름을 구분할 수 있다. 즉 grouping 값이 1인 경우 '합계' 혹은 '소계'와 같은 문자열을 지정하며, 0인 경우는 그룹 기준에 해당하는 열 이름을 지정한다.
-
-# In[ ]:
-
-
-select case when grouping(goods_classify) = 1
-		then '상품분류 합계'
-		else goods_classify end as goods_classify,
-    case when grouping(register_date) = 1
-		then '등록일 합계'
-		else register_date end as register_date,
-	sum(sell_price) as sum_price
-from Goods
-group by goods_classify, register_date with rollup;
-
-
-# ```{figure} image/sql/group_3.png
-# ---
-# name: group_3
-# ---
-# grouping 함수를 이용한 정리
-# ```
-# 
-# `case when` 구문을 통해 `grouping` 결과가 1이면 '상품분류 합계' 혹은 '등록일 합계'를 출력하며, 그렇지 않으면 원래의 열 이름이 나타나게 한다. 이를 통해 소계와 합계를 더욱 쉽게 구분할 수 있다.
+# `rows between n preceding and m following`을 입력하면 앞의 n행과 뒤의 m행 까지를 프레임으로 지정한다. 위의 예에서는 앞의 1개 행과 뒤의 1개 행, 총 3개 행을 이용해 이동평균이 계산된다

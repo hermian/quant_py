@@ -683,7 +683,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div></div></div>
 </div>
 <ol class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">decode()</span></code> 함수를 통해 UTF-8 형태로 변경한다.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read()</span></code> 메서드를 통해 ‘CORPCODE.xml’ 파일을 불러온 후, <code class="docutils literal notranslate"><span class="pre">decode()</span></code> 메서드를 통해 UTF-8 형태로 변경한다.</p></li>
 <li><p>xmltodict 패키지의 <code class="docutils literal notranslate"><span class="pre">parse()</span></code> 함수를 이용해 딕셔너리 형태로 변경한다.</p></li>
 <li><p>위 데이터를 <code class="docutils literal notranslate"><span class="pre">dumps()</span></code> 함수를 통해 JSON 형태로 바꿔준 후, <code class="docutils literal notranslate"><span class="pre">loads()</span></code> 함수를 통해 불러온다.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">get()</span></code> 함수를 통해 result 내에서 list 부분만 불러온다.</p></li>
@@ -788,20 +788,24 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
+<div class="figure align-default" id="dart">
+<img alt="_images/dart.png" src="_images/dart.png" />
+<p class="caption"><span class="caption-number">Fig. 12.4 </span><span class="caption-text">고유번호 테이블</span><a class="headerlink" href="#dart" title="Permalink to this image">¶</a></p>
+</div>
 </div>
 <div class="section" id="id3">
 <h3><span class="section-number">12.1.3. </span>공시 데이터<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="id4">
 <h4><span class="section-number">12.1.3.1. </span>전체 종목의 공시 데이터 수집<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
-<p>먼저 전체 종목의 공시를 수집하도록 하며, 개발가이드는 [개발가이드 → 공시정보 → 공시검색]에 나와있다. 각종 요청인자를 통해 URL을 생성 후 전송하여, 요청에 맞는 데이터를 받을 수 있다. 공시 검색에 해당하는 인자는 <a class="reference internal" href="#dart-api-input"><span class="std std-numref">Fig. 12.4</span></a>와 같다.</p>
+<p>먼저 전체 종목의 공시를 수집하도록 하며, 개발가이드는 [개발가이드 → 공시정보 → 공시검색]에 나와있다. 각종 요청인자를 통해 URL을 생성 후 전송하여, 요청에 맞는 데이터를 받을 수 있다. 공시 검색에 해당하는 인자는 <a class="reference internal" href="#dart-api-input"><span class="std std-numref">Fig. 12.5</span></a>와 같다.</p>
 <div class="figure align-default" id="dart-api-input">
 <img alt="_images/dart_api_input.png" src="_images/dart_api_input.png" />
-<p class="caption"><span class="caption-number">Fig. 12.4 </span><span class="caption-text">OpenAPI 요청 인자 예시</span><a class="headerlink" href="#dart-api-input" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 12.5 </span><span class="caption-text">OpenAPI 요청 인자 예시</span><a class="headerlink" href="#dart-api-input" title="Permalink to this image">¶</a></p>
 </div>
-<p>페이지 하단에서 인자를 입력 후 [검색]을 누르면 <a class="reference internal" href="#dart-api-exam"><span class="std std-numref">Fig. 12.5</span></a>와 같이 각 인자에 맞게 생성된 URL과 그 결과를 볼 수 있다.</p>
+<p>페이지 하단에서 인자를 입력 후 [검색]을 누르면 <a class="reference internal" href="#dart-api-exam"><span class="std std-numref">Fig. 12.6</span></a>와 같이 각 인자에 맞게 생성된 URL과 그 결과를 볼 수 있다.</p>
 <div class="figure align-default" id="dart-api-exam">
 <img alt="_images/dart_api_exam.png" src="_images/dart_api_exam.png" />
-<p class="caption"><span class="caption-number">Fig. 12.5 </span><span class="caption-text">OpenAPI 테스트 예시</span><a class="headerlink" href="#dart-api-exam" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 12.6 </span><span class="caption-text">OpenAPI 테스트 예시</span><a class="headerlink" href="#dart-api-exam" title="Permalink to this image">¶</a></p>
 </div>
 <p>이를 참조하여 시작일과 종료일을 토대로 최근 공시 100건에 해당하는 URL을 생성한다.</p>
 <div class="cell docutils container">
@@ -929,7 +933,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="section" id="id5">
 <h4><span class="section-number">12.1.3.2. </span>특정 기업의 공시 데이터 수집<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
-<p>이번에는 고유번호를 추가하여 전체 종목이 아닌 원하는 기업의 공시만 받도록 한다. 예시로써 삼성전자의 공시 데이터를 수집하겠으며, 삼성전자의 고유번호는 [00126380] 다.</p>
+<p>이번에는 고유번호를 추가하여 전체 종목이 아닌 원하는 기업의 공시만 받도록 한다. 예시로써 삼성전자의 공시 데이터를 수집하겠으며, 삼성전자의 고유번호는 ‘00126380’ 다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corp_list</span><span class="p">[</span><span class="n">corp_list</span><span class="p">[</span><span class="s1">&#39;corp_name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;삼성전자&#39;</span><span class="p">]</span>
@@ -1105,10 +1109,10 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<p>dart 홈페이지의 공시에 해당하는 url과 공시번호를 합쳐준다. 위 url에 접속하여 해당 공시를 좀 더 자세하게 확인할 수 있다.</p>
+<p>dart 홈페이지의 공시에 해당하는 URL과 공시번호를 합쳐준다. 위 URL에 접속하여 해당 공시를 좀 더 자세하게 확인할 수 있다.</p>
 <div class="figure align-default" id="dart-web">
 <img alt="_images/dart_web.png" src="_images/dart_web.png" />
-<p class="caption"><span class="caption-number">Fig. 12.6 </span><span class="caption-text">공시 정보의 확인</span><a class="headerlink" href="#dart-web" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 12.7 </span><span class="caption-text">공시 정보의 확인</span><a class="headerlink" href="#dart-web" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 </div>
@@ -1117,7 +1121,7 @@ const thebe_selector_output = ".output, .cell_output"
 <p>API를 이용하여 사업보고서의 주요 정보 역시 다운로드 받을 수 있으며, 제공하는 목록은 다음과 같다.</p>
 <div class="figure align-default" id="dart-report">
 <img alt="_images/dart_report.png" src="_images/dart_report.png" />
-<p class="caption"><span class="caption-number">Fig. 12.7 </span><span class="caption-text">사업보고서 주요정보 목록</span><a class="headerlink" href="#dart-report" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 12.8 </span><span class="caption-text">사업보고서 주요정보 목록</span><a class="headerlink" href="#dart-report" title="Permalink to this image">¶</a></p>
 </div>
 <p>이 중 예시로써 [배당에 관한 사항]을 다운로드 받도록 하자. URL 생성에 필요한 요청 인자는 다음과 같다.</p>
 <table class="colwidths-auto table" id="div-input">
@@ -1269,10 +1273,10 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="section" id="id7">
 <h3><span class="section-number">12.2.1. </span>장단기 금리차<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <p>장기로 돈을 빌리는 것이 단기로 빌리는 것보다 위험하므로 금리 역시 높아야 하는 것이 당연하며, 이러한 장기금리와 단기금리간의 차이를 기간 프리미엄(Term Premium)이라고 한다. 그러나 가끔씩 장기금리가 단기금리보다 낮아지는 현상이 발생하며, 이는 주요 금융시장 및 경제지표 가운데 경기침체에 대한 예측력이 가장 정확한 것으로 알려져 있다. 실제로 미국에서는 1960년 이후 발생한 모든 경기침체에 앞서 장단기 금리가 역전되어 음수가 되었다.</p>
-<p>FRED에서 각 항목별 코드를 찾는 방법은 매우 간단하다. 먼저 FRED 웹사이트(<a class="reference external" href="https://fred.stlouisfed.org/">https://fred.stlouisfed.org/</a>) 에서 원하는 데이터를 검색한다. 만일 ‘10년-2년 장단기 금리차’에 해당하는 코드를 찾고자 한다면 [10-Year Treasury Constant Maturity Minus 2-Year Treasury Constant Maturity]를 검색하여 해당 페이지로 이동한다. 이 중 <a class="reference internal" href="#fred-code"><span class="std std-numref">Fig. 12.8</span></a>에서 네모로 표시한 [T10Y2Y]가 10년 금리와 2년 금리차의 코드에 해당한다. 동일한 방법으로 10년 금리와 3개월 금리 차이에 해당하는 [10-Year Treasury Constant Maturity Minus 3-Month Treasury Constant Maturity]를 검색해보면 해당 코드가 [T10Y3M]임을 알 수 있다.</p>
+<p>FRED에서 각 항목별 코드를 찾는 방법은 매우 간단하다. 먼저 FRED 웹사이트(<a class="reference external" href="https://fred.stlouisfed.org/">https://fred.stlouisfed.org/</a>) 에서 원하는 데이터를 검색한다. 만일 ‘10년-2년 장단기 금리차’에 해당하는 코드를 찾고자 한다면 [10-Year Treasury Constant Maturity Minus 2-Year Treasury Constant Maturity]를 검색하여 해당 페이지로 이동한다. 이 중 <a class="reference internal" href="#fred-code"><span class="std std-numref">Fig. 12.9</span></a>에서 네모로 표시한 [T10Y2Y]가 10년 금리와 2년 금리차의 코드에 해당한다. 동일한 방법으로 10년 금리와 3개월 금리 차이에 해당하는 [10-Year Treasury Constant Maturity Minus 3-Month Treasury Constant Maturity]를 검색해보면 해당 코드가 [T10Y3M]임을 알 수 있다.</p>
 <div class="figure align-default" id="fred-code">
 <img alt="_images/fred_code.png" src="_images/fred_code.png" />
-<p class="caption"><span class="caption-number">Fig. 12.8 </span><span class="caption-text">FRED 코드 확인</span><a class="headerlink" href="#fred-code" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 12.9 </span><span class="caption-text">FRED 코드 확인</span><a class="headerlink" href="#fred-code" title="Permalink to this image">¶</a></p>
 </div>
 <p>해당 데이터를 다운로드 받아보자.</p>
 <div class="cell docutils container">
@@ -1385,10 +1389,10 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="section" id="id8">
 <h3><span class="section-number">12.2.2. </span>기대 인플레이션<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
-<p>기대 인플레이션이란 현재 정보를 바탕으로 미래에 예상되는 인플레이션이다. 이는 다음과 같이 계산됩니다.</p>
+<p>기대 인플레이션이란 현재 정보를 바탕으로 미래에 예상되는 인플레이션이다. 이는 다음과 같이 계산된다.</p>
 <div class="math notranslate nohighlight">
 \[기대\ 인플레이션 = 10년물\ 미국\ 국채금리 - 10년물\ 물가연동국채(TIPS)\ 금리\]</div>
-<p>만일 향후 인플레이션이 올 것이라고 사람들이 전망한다면, 물가연동국채를 매수하므로 물가연동국채의 가격이 상승하고 해당 금리는 하락하게 될 것이다. 따라서 물가연동국채의 금리가 하락할 수록 기대 인플레이션은 상승한다. 기대 인플레이션 역시 자산의 가격에 매우 크게 영향을 미치는 요소이며, FED의 목표 중 하나가 기대 인플레이션을 2%로 유지하는 것이므로, 해당 지표의 위치를 통해 FED의 향후 움직임 및 자산 가격의 변동을 예측할 수 있다. FRED에서 기대 인플레이션에 해당하는 코드는 [T10YIE] 이다. 해당 데이터를 받아보자.</p>
+<p>만일 향후 인플레이션이 올 것이라고 사람들이 전망한다면, 물가연동국채를 매수하므로 물가연동국채의 가격이 상승하고 해당 금리는 하락하게 될 것이다. 따라서 물가연동국채의 금리가 하락할 수록 기대 인플레이션은 상승한다. 기대 인플레이션 역시 자산의 가격에 매우 크게 영향을 미치는 요소이며, FED의 목표 중 하나가 인플레이션을 2%로 유지하는 것이므로, 해당 지표의 위치를 통해 FED의 향후 움직임 및 자산 가격의 변동을 예측할 수 있다. FRED에서 기대 인플레이션에 해당하는 코드는 [T10YIE] 이다. 해당 데이터를 받아보자.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_datareader</span> <span class="k">as</span> <span class="nn">web</span>
@@ -1483,7 +1487,7 @@ const thebe_selector_output = ".output, .cell_output"
 <p>위 7개 지표를 합산하여 0점에서 100점 사이의 점수를 구하며, 점수가 낮을 수록 시장이 공포에 휩싸여 있음을, 점수가 높을 수록 시장이 탐욕에 물들어 있음을 나타낸다.</p>
 <div class="figure align-default" id="fear-greed">
 <img alt="_images/fear_greed.png" src="_images/fear_greed.png" />
-<p class="caption"><span class="caption-number">Fig. 12.9 </span><span class="caption-text">Fear &amp; Greed Index</span><a class="headerlink" href="#fear-greed" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 12.10 </span><span class="caption-text">Fear &amp; Greed Index</span><a class="headerlink" href="#fear-greed" title="Permalink to this image">¶</a></p>
 </div>
 <p>해당 지표는 아래 사이트에서 확인할 수 있다.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">money</span><span class="o">.</span><span class="n">cnn</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">fear</span><span class="o">-</span><span class="ow">and</span><span class="o">-</span><span class="n">greed</span><span class="o">/</span>
@@ -1492,7 +1496,7 @@ const thebe_selector_output = ".output, .cell_output"
 <p>개발자도구 화면을 통해 현재 점수가 위치하는 곳을 찾아보면, 클래스 이름이 [market-fng-gauge__dial-number-value]이며, 내용이 동적으로 계속 변하기에 정적 크롤링이 아닌 동적 크롤링을 이용해야 한다. 셀레니움을 사용해 해당 지표를 크롤링 해보자.</p>
 <div class="figure align-default" id="fear-greed-html">
 <img alt="_images/fear_greed_html.png" src="_images/fear_greed_html.png" />
-<p class="caption"><span class="caption-number">Fig. 12.10 </span><span class="caption-text">해당 지표의 태그 확인</span><a class="headerlink" href="#fear-greed-html" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 12.11 </span><span class="caption-text">해당 지표의 태그 확인</span><a class="headerlink" href="#fear-greed-html" title="Permalink to this image">¶</a></p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

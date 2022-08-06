@@ -673,7 +673,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="section" id="id3">
 <h2><span class="section-number">14.2. </span>최대샤프지수 포트폴리오<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<p>최대샤프지수 포트폴리오(Maximum Sharpe Ratio Portfolio)란 샤프지수가 최대가 되도록 하는 포트폴리오를 구성하는 것이다. 샤프지수는 <span class="math notranslate nohighlight">\(\frac{R_p-R_f}{\sigma_p}\)</span>, 즉 포트폴리오의 수익을 변동성으로 나눈 값이며, 위험 대비 수익률이라고도 볼 수 있다. 따라서 샤프지수가 최대가 되는 포트폴리오는 위험은 낮으면서 수익은 높은 지점이다. riskfolio-lib 패키지의 함수를 이용해 해당 포트폴리오를 구성하기 위한 자산 별 투자비중을 구해보도록 하자.</p>
+<p>최대샤프지수 포트폴리오(Maximum Sharpe Ratio Portfolio)란 샤프지수가 최대가 되도록 하는 포트폴리오를 구성하는 것이다. 샤프지수는 <span class="math notranslate nohighlight">\(\frac{R_p-R_f}{\sigma_p}\)</span>, 즉 포트폴리오의 수익을 변동성으로 나눈 값이며, 위험 대비 수익률이라고도 볼 수 있다. 따라서 샤프지수가 최대가 되는 포트폴리오는 위험은 낮으면서 수익은 높은 지점이다. riskfolio-lib 패키지의 함수를 이용해 해당 포트폴리오를 구성하기 위한 자산별 투자비중을 구해보도록 하자.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">riskfolio</span> <span class="k">as</span> <span class="nn">rp</span>
@@ -908,7 +908,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <ol class="simple">
-<li><p>그래프의 제목, 기대 수익률, 분산-공분산 행렬, 자산 별 수익률 값을 입력한다.</p></li>
+<li><p>라벨, 기대 수익률, 분산-공분산 행렬, 자산별 수익률 값을 입력한다.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">plot_frontier()</span></code> 함수를 통해 효율적 투자선을 시각화한다. 각종 파라미터를 수정하여 그래프를 꾸밀수도 있다.</p></li>
 </ol>
 <p>각 점의 색은 샤프지수를 의미하며, 붉은색 별은 샤프지수가 최대가 되는 점을 의미한다.</p>
@@ -1260,7 +1260,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li><p>ainequality와 binequality, 즉 제약조건 부분에 위에서 구한 행렬을 입력한다.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">optimization()</span></code> 함수를 통해 최소분산 포트폴리오를 만족하는 해를 구한다.</p></li>
 </ol>
-<p>결과를 살펴보면 각 자산에 적어도 5%가 투자되었으며, 최대 비중이 20%를 넘지 않는다. 이로써 구석해 문제가 다소 해결되었다.</p>
+<p>결과를 살펴보면 각 자산에 적어도 5%가 투자되었으며, 최대 비중이 20%를 넘지 않는다. 이로써 구석해 문제가 다소 해결되었다. 비중을 그래프로 나타내보도록 하자.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">rp</span><span class="o">.</span><span class="n">plot_bar</span><span class="p">(</span><span class="n">w</span><span class="o">=</span><span class="n">w</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Portfolio&#39;</span><span class="p">,</span>  <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>

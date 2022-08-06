@@ -88,7 +88,7 @@ driver.page_source[1:1000]
 # <a href="https://news.naver.com/" class="nav" data-clk="svc.news">뉴스</a>
 # ```
 # 
-# 위 정보를 통해 해당 부분을 클릭할 수 있다.
+# 위 정보를 통해 해당 부분을 클릭해보도록 하자.
 # 
 # ```{figure} image/selenium/selenium_news.png
 # ---
@@ -110,7 +110,7 @@ driver.find_element(By.LINK_TEXT , value = '뉴스').click()
 # 뉴스 탭으로 이동
 # ```
 # 
-# 브라우저 상에서 보이는 버튼, 검색창, 사진, 테이블, 동영상 등을 엘레먼트(element, 요소)라고 한다. `find_element()`는 다양한 방법으로 엘레먼트에 접근하게 해주며, `By.*` 를 통해 어떠한 방법으로 엘레먼트에 접근할지 선언한다. LINK_TEXT의 경우 링크가 달려 있는 텍스트로 접근하며, value = '뉴스', 즉 뉴스라는 단어가 있는 엘레먼트로 접근한다. `click()` 함수는 마우스 클릭을 실행하며 결과 적으로 뉴스 탭을 클릭한 후 페이지가 이동되는 것을 확인할 수 있다. `find_element()` 내 접근방법 및 셀레니움의 각종 동작 제어 방법에 대해서는 나중에 다시 정리하도록 한다.
+# 브라우저 상에서 보이는 버튼, 검색창, 사진, 테이블, 동영상 등을 엘레먼트(element, 요소)라고 한다. `find_element()`는 다양한 방법으로 엘레먼트에 접근하게 해주며, `By.*` 를 통해 어떠한 방법으로 엘레먼트에 접근할지 선언한다. LINK_TEXT의 경우 링크가 달려 있는 텍스트로 접근하며, `value = '뉴스'`, 즉 뉴스라는 단어가 있는 엘레먼트로 접근한다. `click()` 함수는 마우스 클릭을 실행하며 결과 적으로 뉴스 탭을 클릭한 후 페이지가 이동되는 것을 확인할 수 있다. `find_element()` 내 접근방법 및 셀레니움의 각종 동작 제어 방법에 대해서는 나중에 다시 정리하도록 한다.
 # 
 # 이제 뒤로가기를 실행해보도록 하자.
 
@@ -144,7 +144,7 @@ driver.find_element(By.CLASS_NAME, value = 'input_text').send_keys('퀀트 투�
 # 검색어 입력하기
 # ```
 # 
-# `find_element()` 내에 By.CLASS_NAME을 입력하면 클래스 명이 있는 엘레먼트에 접근하며, 여기서는 검색창에 접근한다. 그 후 `send_keys()` 내에 텍스트를 입력하면 해당 내용이 웹페이지에 입력된다. 이제 웹페이지에서 검색 버튼 해당하는 돋보기 모양을 클릭하거나 엔터키를 누르면 검색이 실행된다. 먼저 돋보기 모양의 위치를 확인해보면 search_btn id와 btn_submit 클래스에 위치하고 있다.
+# `find_element()` 내에 By.CLASS_NAME을 입력하면 클래스 명에 해당하는 엘레먼트에 접근하며, 여기서는 검색창에 접근한다. 그 후 `send_keys()` 내에 텍스트를 입력하면 해당 내용이 웹페이지에 입력된다. 이제 웹페이지에서 검색 버튼 해당하는 돋보기 모양을 클릭하거나 엔터키를 누르면 검색이 실행된다. 먼저 돋보기 모양의 위치를 확인해보면 search_btn id와 btn_submit 클래스에 위치하고 있다.
 # 
 # ```{figure} image/selenium/selenium_searchbutton.png
 # ---
@@ -166,7 +166,7 @@ driver.find_element(By.CLASS_NAME, value = 'btn_submit').send_keys(Keys.ENTER)
 # 엔터키 제어하기
 # ```
 # 
-# `find_element(By.CLASS_NAME, value = 'btn_submit')`를 통해 검색 버튼에 접속한다. 그 후 `send_keys(Keys.ENTER)`를 입력하면 엔터키를 누르는 동작이 실행된다. 페이지를 확인해보면 검색이 실행된 후 결과를 확인할 수 있다. 
+# `find_element(By.CLASS_NAME, value = 'btn_submit')`를 통해 검색 버튼에 접근한다. 그 후 `send_keys(Keys.ENTER)`를 입력하면 엔터키를 누르는 동작이 실행된다. 페이지를 확인해보면 검색이 실행된 후 결과를 확인할 수 있다. 
 # 
 # 이번에는 다른 단어를 검색해보도록 하자. 웹에서 기존 검색어 내용을 지운 후, 검색어를 입력하고, 버튼을 클릭해야 한다. 이를 위해 검색어 박스와 검색 버튼의 위치를 찾아보면 다음과 같다.
 # 
@@ -517,7 +517,7 @@ m = p.match('Use python')
 print(m)
 
 
-# 'Use python 이라는 문자열은 맨 처음의 문자 "U"가 대문자로써, 소문자를 의미하는 정규 표현식 `[a-z]+`와는 매치되지 않아 None을 반환한다.
+# 'Use python 이라는 문자열은 맨 처음의 문자 'U'가 대문자로써, 소문자를 의미하는 정규 표현식 `[a-z]+`와는 매치되지 않아 None을 반환한다.
 
 # In[19]:
 

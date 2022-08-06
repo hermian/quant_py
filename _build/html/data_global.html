@@ -500,7 +500,7 @@ const thebe_selector_output = ".output, .cell_output"
 <h2><span class="section-number">11.1. </span>유료 데이터 벤더 이용하기<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>미국 시장의 데이터만 필요할 경우 유료 데이터 벤더를 이용하는 것도 좋은 방법이다. 미국에는 금융 데이터를 API로 제공하는 수많은 업체가 있으며, tiingo의 경우는 월 $10만 지불하면 미국과 중국의 4만여개 종목에 대한 데이터를 API 형태로 받을 수 있다. 이는 상장폐지된 종목을 커버할 뿐만 아니라, API를 이용하므로 크롤링과는 비교할 수 없는 속도로 데이터를 받을 수 있다는 장점이 있다. 이 외에도 Alpha Vantage, Quandl, Polygon 등 수많은 데이터 벤더가 존재한다.</p>
 <div class="figure align-default" id="tiingo">
-<img alt="_images/tiingo.png" src="_images/tiingo.png" />
+<a class="reference internal image-reference" href="_images/tiingo.png"><img alt="_images/tiingo.png" src="_images/tiingo.png" style="width: 564.1999999999999px; height: 579.5999999999999px;" /></a>
 <p class="caption"><span class="caption-number">Fig. 11.1 </span><span class="caption-text">tiingo의 유/무료 서비스 비교</span><a class="headerlink" href="#tiingo" title="Permalink to this image">¶</a></p>
 </div>
 <p>tiingo는 무료 계정도 하루 1,000회까지 API 요청을 할 수 있으며, 파이썬에서 사용할 수 있는 패키지도 있으므로 이를 사용해 데이터를 수집해보도록 하겠다.</p>
@@ -542,7 +542,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="section" id="id3">
 <h3><span class="section-number">11.1.2. </span>데이터 다운로드<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>tiingo 패키지를 이용해 데이터를 받아보도록 하겠다. 데이터를 받기 전에 먼저 API 접속환경을 셋팅한다.</p>
+<p>tiingo 패키지를 이용해 데이터를 받아보도록 하겠다. 데이터를 받기위해 API 접속환경을 셋팅한다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tiingo</span> <span class="kn">import</span> <span class="n">TiingoClient</span>
@@ -558,7 +558,8 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<p>API token을 불러온 후, 접속환경에 해당하는 config에 이를 입력한다. tiingo에서 제공하는 종목은 어떠한 것이 있는지 티커 정보들을 확인해보도록 한다.</p>
+<p>API token을 불러온 후, 접속환경에 해당하는 config에 이를 입력한다.</p>
+<p>먼저 tiingo에서 제공하는 종목은 어떠한 것이 있는지 티커 정보들을 확인해보도록 하자.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tickers</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">list_stock_tickers</span><span class="p">()</span>
@@ -645,7 +646,7 @@ const thebe_selector_output = ".output, .cell_output"
 </table>
 </div></div></div>
 </div>
-<p>ticker(티커), exchange(거래소), assetType(주식 종류), priceCurrency(거래 통화), startDate(시작일), endDate(마감일) 정보가 표시된다. 거래소와 통화 별 종목이 몇개가 있는지 확인해보도록 하자.</p>
+<p><code class="docutils literal notranslate"><span class="pre">list_stock_tickers()</span></code> 메서드를 통해 티커 정보를 받아올 수 있다. ticker(티커), exchange(거래소), assetType(주식 종류), priceCurrency(거래 통화), startDate(시작일), endDate(마감일) 정보가 표시된다. 거래소와 통화 별 종목이 몇개가 있는지 확인해보도록 하자.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tickers_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;exchange&#39;</span><span class="p">,</span> <span class="s1">&#39;priceCurrency&#39;</span><span class="p">])[</span><span class="s1">&#39;ticker&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
@@ -838,90 +839,8 @@ Name: ticker, dtype: int64
 </table>
 </div></div></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">get_dataframe()</span></code> 메서드 내에 티커를 입력하면 close(종가), high(고가), low(저가), open(시가), volumne(거래량) 및 수정주가와 divCash(현금 배당), splitFactor(주식분할 조정계수)까지 제공한다.</p>
-<p>이번에는 종목이 제공하는 재무제표 항목은 어떠한 것이 있는지 받아보도록 하겠다.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">definitions</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_fundamentals_definitions</span><span class="p">(</span><span class="s1">&#39;GOOGL&#39;</span><span class="p">)</span>
-<span class="n">definitions_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_records</span><span class="p">(</span><span class="n">definitions</span><span class="p">)</span>
-
-<span class="n">definitions_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>dataCode</th>
-      <th>name</th>
-      <th>description</th>
-      <th>statementType</th>
-      <th>units</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>rps</td>
-      <td>Revenue Per Share</td>
-      <td>Revenue per share</td>
-      <td>overview</td>
-      <td>$</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>roa</td>
-      <td>Return on Assets ROA</td>
-      <td>Net Income/Total Assets</td>
-      <td>overview</td>
-      <td>%</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>assetTurnover</td>
-      <td>Asset Turnover</td>
-      <td>Revenue over assets</td>
-      <td>overview</td>
-      <td>None</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>bookVal</td>
-      <td>Book Value</td>
-      <td>Book value of the share, assets - liabilities</td>
-      <td>overview</td>
-      <td>$</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>bvps</td>
-      <td>Book Value Per Share</td>
-      <td>Book Value per each share</td>
-      <td>overview</td>
-      <td>$</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">get_fundamentals_definitions()</span></code> 메서드 내에 티커를 입력하면 재무제표 항목에 대한 정보가 JSON 형태로 받아지며, <code class="docutils literal notranslate"><span class="pre">from_records()</span></code> 메서드를 통해 데이터프레임 형태로 변경해준다. 결과를 보면 재무제표 항목 및 계산하는 방법과 기타 정보에 대해 매우 자세하게 나와있다.</p>
-<p>일별 가치지표 역시 간단하게 받을 수 있다. (무료 계정의 경우 다우존스 30 지수에 포함되는 종목 정보만 제공한다.)</p>
+<p><code class="docutils literal notranslate"><span class="pre">get_dataframe()</span></code> 메서드 내에 티커를 입력하면 close(종가), high(고가), low(저가), open(시가), volumne(거래량) 및 수정주가와 divCash(현금 배당), splitFactor(주식분할 조정계수)까지 데이터를 받을 수 있다.</p>
+<p>이번에는 일별 가치지표를 받아보도록 하자. (무료 계정의 경우 다우존스 30 지수에 포함되는 종목 정보만 제공한다.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fundamentals_daily</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_fundamentals_daily</span><span class="p">(</span><span class="s1">&#39;AAPL&#39;</span><span class="p">)</span>
@@ -1345,7 +1264,7 @@ Name: ticker, dtype: int64
 </div>
 <div class="section" id="id5">
 <h3><span class="section-number">11.2.1. </span>전 종목 티커 크롤링<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<p>위 과정을 통해 국가별 전 종목의 티커 및 관련 정보를 수집하는 방법과, 페이지 수를 계산할 수 있었다. 이제 for문을 이용해 일본의 전 종목 티커를 크롤링해보도록 하겠다.</p>
+<p>위 과정을 통해 국가별 전 종목의 티커 및 관련 정보를 수집하는 방법과, 페이지 수를 계산할 수 있었다. 이제 for문을 이용해 미국의 전 종목 티커를 크롤링해보도록 하겠다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
@@ -1384,7 +1303,7 @@ Name: ticker, dtype: int64
 </div>
 <ol class="simple">
 <li><p>크롬 드라이브를 불러온다.</p></li>
-<li><p>국가 코드는 미국에 해당하는 ‘35’를 입력한다.</p></li>
+<li><p>국가 코드는 미국에 해당하는 ‘5’를 입력한다.</p></li>
 <li><p>먼저 첫페이지에 해당하는 URL을 생성한다.</p></li>
 <li><p>셀레니움으로 해당 페이지를 연다</p></li>
 <li><p>‘Screener Results’에 해당하는 부분은 종목이 들어있는 테이블이 로딩된 이후 나타난다. 따라서 <code class="docutils literal notranslate"><span class="pre">WebDriverWait()</span></code> 함수를 통해 해당 테이블이 로딩될 때까지 기다리며, 테이블의 XPATH는 ‘//*[&#64;id=”resultsTable”]/tbody’ 이다.</p></li>
@@ -1443,7 +1362,7 @@ Name: ticker, dtype: int64
 <li><p>빈 리스트(all_data_df)를 생성한다.</p></li>
 <li><p>for문을 통해 전체 페이지에서 종목명과 티커 등의 정보를 크롤링한다.</p></li>
 <li><p>f-string을 통해 각 페이지에 해당하는 URL을 생성한 후 페이지를 연다.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">WebDriverWait()</span></code> 함수를 통해 테이블이 로딩될때 까지 기다린다. 또한 간혹 페이지 오류가 발생할 때가 있으므로, <code class="docutils literal notranslate"><span class="pre">try</span> <span class="pre">except</span></code>문을 이용해 오류 발생 시 1초간 기다린 후 <code class="docutils literal notranslate"><span class="pre">refresh()</span></code>를 통해 새로고침을 하여 다시 테이블이 로딩되길 기다린다.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">WebDriverWait()</span></code> 함수를 통해 테이블이 로딩될때 까지 기다린다. 또한 간혹 페이지 오류가 발생할 때가 있으므로, try except문을 이용해 오류 발생 시 1초간 기다린 후 <code class="docutils literal notranslate"><span class="pre">refresh()</span></code>를 통해 새로고침을 하여 다시 테이블이 로딩되길 기다린다.</p></li>
 <li><p>HTML 정보를 불러온 후, 테이블에 해당하는 부분을 선택한다.</p></li>
 <li><p>원하는 열만 선택한다.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">append()</span></code> 메서드를 통해 해당 테이블을 리스트에 추가한다.</p></li>
@@ -1536,7 +1455,6 @@ create table global_ticker
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_datareader</span> <span class="k">as</span> <span class="nn">web</span>
 
 <span class="n">price</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">DataReader</span><span class="p">(</span><span class="s1">&#39;AAPL&#39;</span><span class="p">,</span> <span class="s1">&#39;yahoo&#39;</span><span class="p">)</span>
-
 <span class="n">price</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1628,18 +1546,17 @@ create table global_ticker
 </div></div></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">DataReader()</span></code> 함수 내에 티커와 출처에 해당하는 ‘yahoo’를 입력하면 주가 정보를 매우 손쉽게 받을 수 있다.</p>
-<p>반면 미국이 아닌 국가의 경우 단순히 티커만 입력할 경우 데이터를 받을 수 없다. 예를 들어 일본의 도쿄 일렉트론은 일본 내에서 티커가 ‘8035’이며, 야후 파이낸스에서 이를 검색해보자.</p>
+<p>반면 미국이 아닌 국가의 경우 단순히 티커만 입력할 경우 데이터를 받을 수 없다. 예를 들어 일본의 ‘도쿄 일렉트론’은 일본 내에서 티커가 ‘8035’이며, 야후 파이낸스에서 이를 검색해보자.</p>
 <div class="figure align-default" id="same-ticker">
 <img alt="_images/same_ticker.png" src="_images/same_ticker.png" />
 <p class="caption"><span class="caption-number">Fig. 11.13 </span><span class="caption-text">중복 티커</span><a class="headerlink" href="#same-ticker" title="Permalink to this image">¶</a></p>
 </div>
-<p>우리가 원하는 도쿄 일렉트론 뿐만 아니라 홍콩에 상장된 ‘Janco Holdings Limited’라는 주식 역시 티커가 8035 이다. 이처럼 각기 다른 국가에서 중복된 티커가 사용되는 경우가 종종 발생되므로, 야후 파이낸스 혹은 여러 벤더의 경우 ‘티커.국가코드’를 통해 이들을 구분한다. 일본의 경우 국가코드는 ‘T’ 이다. 이를 이용해 도쿄 일렉트론의 주가를 받는 법은 다음과 같다.</p>
+<p>우리가 원하는 도쿄 일렉트론 뿐만 아니라 홍콩에 상장된 ‘Janco Holdings Limited’라는 주식 역시 티커가 8035 이다. 이처럼 각기 다른 국가에서 중복된 티커가 사용되는 경우가 종종 발생되므로, 야후 파이낸스 혹은 여러 벤더의 경우 ‘티커.국가코드’ 형태를 통해 이들을 구분한다. 야후 파이낸스에서 일본의 국가코드는 ‘T’ 이다. 이를 이용해 도쿄 일렉트론의 주가를 받는 법은 다음과 같다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_datareader</span> <span class="k">as</span> <span class="nn">web</span>
 
 <span class="n">price</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">DataReader</span><span class="p">(</span><span class="s1">&#39;8035.T&#39;</span><span class="p">,</span> <span class="s1">&#39;yahoo&#39;</span><span class="p">)</span>
-
 <span class="n">price</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>

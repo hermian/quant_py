@@ -983,11 +983,11 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<div class="figure align-default" id="price-3">
-<img alt="image/sql_in_python/price_3.png" src="image/sql_in_python/price_3.png" />
-<p class="caption"><span class="caption-number">Fig. 6.6 </span><span class="caption-text">데이터 업데이트</span><a class="headerlink" href="#price-3" title="Permalink to this image">¶</a></p>
+<div class="figure align-default" id="price-2-insert">
+<img alt="_images/price_2_insert.png" src="_images/price_2_insert.png" />
+<p class="caption"><span class="caption-number">Fig. 6.6 </span><span class="caption-text">데이터 업데이트</span><a class="headerlink" href="#price-2-insert" title="Permalink to this image">¶</a></p>
 </div>
-<p>앞의 [insert into … values] 부분은 일반적인 데이터를 입력하는 쿼리와 형태가 같으며, 그 후 new라는 별명을 붙여준 후 [on duplicate key update] 구문을 추가해준다. 즉 데이터를 입력하되, 키 값(날짜, 티커)을 기준으로 이미 데이터가 존재할 경우에는 입력이 아닌 업데이트를 해준다. 000001 종목의 1월 2~3일, 000002 종목의 1월 2일 데이터는 이미 존재하기에 데이터가 업데이트 된다. 반면 000002 종목의 1월 3일 데이터는 기존에 없던 값이기에 새롭게 추가된다.</p>
+<p>앞의 [insert into … values] 부분은 일반적인 데이터를 입력하는 쿼리와 형태가 같으며, 그 후 new라는 별명을 붙여준 후 [on duplicate key update] 구문을 추가해준다. 즉 데이터를 입력하되, 키 값(날짜, 티커)을 기준으로 이미 데이터가 존재할 경우에는 입력이 아닌 업데이트를 해준다. 000001 종목의 1월 2~3일, 000002 종목의 1월 2일 데이터는 이미 존재하며 데이터가 바뀌지 않아 값이 그대로 유지된다. 반면 000002 종목의 1월 3일 데이터는 기존에 없던 값이기에 새롭게 추가된다.</p>
 <p>이번에는 입력과 업데이트를 동시에 진행해보겠다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

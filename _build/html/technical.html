@@ -511,7 +511,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<p>먼저 S&amp;P 500 지수(^GSPC) 데이터를 다운로드 받은 후, 최근 500일 데이터만 선택한다.</p>
+<p>S&amp;P 500 지수(^GSPC) 데이터를 다운로드 받은 후, 최근 500일 데이터만 선택한다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">talib</span>
@@ -597,7 +597,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <ol class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">RSI()</span></code> 함수를 이용해 RSI를 계산할 수 있으며, <code class="docutils literal notranslate"><span class="pre">timeperiod</span></code>는 기간을 의미한다.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">fillna()</span></code> 인자를 통해 NA를 0으로 채워준다.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fillna()</span></code> 메서드를 통해 NA를 0으로 채워준다.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">GridSpec()</span></code> 함수를 통해 그림을 두 구간으로 나누어 준다.</p></li>
 <li><p>상단에는 주가를 그려준다.</p></li>
 <li><p>하단에는 RSI 및 과매수와 과매도를 의미하는 70과 30 부분에 수평선을 그려준다.</p></li>
